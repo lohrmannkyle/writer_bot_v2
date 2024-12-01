@@ -4,11 +4,25 @@ random.seed(SEED)
 NONWORD = "@" 
 
 class Hashtable:
+    """
+    Class represents a hashtable that uses linear probing for collision
+        handling. Size of table is passed into constructor.
+    """
     def __init__(self, size):
+        """
+        Constructor
+        Parameters: size (int) -> specifies size of table
+        """
         self._pairs = [None] * size
         self._size = size
 
     def put(self, key, value):
+        """
+        Places the key and value in the table. Index is determined
+            by the hash of the key. Uses linear probing.
+        Parameters: key (str) -> key to be added
+                    value (str) -> value to be added
+        """
         index = self._hash(key)
         count = 0
 
@@ -25,6 +39,11 @@ class Hashtable:
             self._pairs[index] = [key, [value]]
     
     def get(self, key):
+        """
+        Returns the value associated with the key
+        Parameters: key (str) -> key to get value of
+        Returns:    (str) -> value associated with key
+        """
         index = self._hash(key)
         while self._pairs[index] != None:
             if self._pairs[index][0] == key:
@@ -33,6 +52,7 @@ class Hashtable:
         return None
     
     def __contains__(self, key):
+        """ Returns True if key is in the table, else False """
         index = self._hash(key)
         while self._pairs[index] != None:
             if self._pairs[index][0] == key:
@@ -41,10 +61,12 @@ class Hashtable:
         return False           
 
     def __str__(self):
+        """ Returns the table as a string """
         return str(self._pairs)
 
 
     def _hash(self, key):
+        """ hash function used for indexing """
         p = 0
         for c in key:
             p = 31*p + ord(c)
@@ -55,10 +77,10 @@ def add_nonwords(words, prefix_len, table_len):
     """
     Essentially implements a queue with shifting
         to handle adding intial nonwords to dict
-    Parameters: dict -> markov chain table
-                words(list) -> first line from file
+    Parameters: words(list) -> first line from file
                 prefix_len(int) -> user entered prefix_len
-    Returns:    dict -> markov chain table with nonword cases added
+                table_len(int)  -> size of table to create
+    Returns:    HashTable -> markov chain table with nonword cases added
 
     example for case prefix_len == 2:
     [nonword, nonword, words[i]]
@@ -86,7 +108,8 @@ def create_dict(file, prefix_len, table_len):
     Creates the table for the markov chain generation
     Parameters: file -> file to create table from
                 prefix_len(int) -> length of key used in dict
-    Returns: prefix_suffix(dict) -> filled table
+                table_len(int)  -> size of table
+    Returns: prefix_suffix(HashTable) -> filled table
     """
     words = file.read().split()
     prefix_suffix = add_nonwords(words[:prefix_len + 1], prefix_len, table_len)
@@ -141,8 +164,6 @@ def main():
     prefix_len= int(input())
     num_words = int(input())
 
-    # file = open("test/bee.txt")
-
     if prefix_len < 1:
         print("ERROR: specified prefix size is less than one")
         sys.exit(0)
@@ -157,14 +178,4 @@ def main():
     print_chain(chain)
     file.close
 
-    # dict = create_dict(file, 2, 71)
-    # print(dict)
-    # print(dict._pairs[dict._hash("@ @")])
-    # print(dict._pairs[dict._hash("@ Half")])
-    # print(dict._pairs[dict._hash("Half a")])
-
-    # for i in range(dict._size):
-    #     if dict._pairs[i] is not None:
-    #         print(dict._pairs[i][1])
-    
 main()
