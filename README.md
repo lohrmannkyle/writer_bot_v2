@@ -55,3 +55,20 @@ class Hashtable:
     def get(self, key)
     def __contains__(self, key)
     def __str__(self)
+```
+
+
+## Example 
+```bash
+(base) kylelohrmann@kyles-MacBook-Pro long % python writer_bot_ht.py 
+test/bee.txt
+71
+2
+50
+Half a bee philosophically Must ipso facto half not be.
+But half the bee is not a bee philosophically Must
+ipso facto half not be. But half the bee has
+got to be Vis a vis, its entity. Do you
+see? But can a bee philosophically Must ipso facto half
+(base) kylelohrmann@kyles-MacBook-Pro long % 
+```
