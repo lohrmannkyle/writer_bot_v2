@@ -38,9 +38,4 @@ The program expects **four inputs** from the user, read using `input()` (no prom
 
 ---
 
-## 🖨️ Output Format
 
-The final result is a single line of randomly generated words (joined with spaces), printed using:
-
-```python
-print(" ".join(result))
